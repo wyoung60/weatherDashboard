@@ -1,0 +1,40 @@
+.navbar-brand {
+  color: white;
+  font-size: 50px;
+}
+
+aside {
+  background-color: grey;
+  min-height: 50%;
+}
+
+.set2 {
+  background-color: green;
+  height: 500px;
+}
+
+.set1 {
+  background-color: greenyellow;
+}
+
+.set3 {
+  background-color: hotpink;
+}
+
+.btnsize {
+  height: 60px;
+}
+
+#weather {
+  height: 40px;
+  width: 40px;
+  float: left;
+}
+
+#currentTemp {
+  clear: both;
+}
+
+#indexValue {
+  width: 40px;
+}
