@@ -8,33 +8,15 @@ aside {
   min-height: 50%;
 }
 
-.set2 {
-  background-color: green;
-  height: 500px;
-}
-
-.set1 {
-  background-color: greenyellow;
-}
-
-.set3 {
-  background-color: hotpink;
+.float_left {
+  float: left;
 }
 
 .btnsize {
   height: 60px;
 }
 
-#weather {
-  height: 40px;
-  width: 40px;
-  float: left;
-}
-
-#currentTemp {
-  clear: both;
-}
-
-#indexValue {
-  width: 40px;
+img {
+  height: 50px;
+  width: 50px;
 }
