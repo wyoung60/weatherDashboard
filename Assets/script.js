@@ -1,3 +1,16 @@
+var cityArray = JSON.parse(localStorage.getItem("searchHistory"));
+if (cityArray === null) {
+  var cityArray = [];
+}
+console.log(cityArray);
+for (var i = 0; i < cityArray.length; i++) {
+  var historyButton = $("<button>").attr(
+    "class",
+    "btn btn-outline-primary btnsize"
+  );
+  historyButton.text(cityArray[i]);
+  $(".searchHistory").prepend(historyButton);
+}
 var currentDayHeader = $("<h2>").attr("class", "float_left");
 var currentDate = "";
 var currentDayImg = "";
@@ -6,7 +19,7 @@ var currentHumidity = "";
 var currentWindSpeed = "";
 var uvIndexElement = $("<h4>").text("UV Index: ");
 var uvSpanElement = $("<span>");
-var fiveDayHeader = $("<h1>").text("5 Day Forecast:");
+var fiveDayHeader = $("<h1>").text("5 Day Forecast:").attr("class", "row m-2");
 var dailyForcastRow = $("<div>").attr("class", "row m-2");
 var dailyCard = [];
 var dailyCardBody = [];
@@ -24,19 +37,50 @@ for (var i = 1; i < 6; i++) {
   dailyTemp[i] = $("<h5>");
   dailyHumidity[i] = $("<h5>");
 }
-fiveDayHeader.attr("class", "row m-2");
+
 //Click event for search button
+
 $("#searchBtn").on("click", function () {
   $(".col-10").empty();
+  $(".searchHistory").empty();
+  $;
   //Store selected city
-  userCity = $("#cityName").val();
+  var userCity = $("#cityName").val();
+  $("#cityName").val("");
+  $("#cityName").attr("placeholder", "Enter City Here");
+  if (cityArray.length < 7) {
+    cityArray.push(userCity);
+  } else {
+    cityArray.push(userCity);
+    cityArray.shift();
+  }
+  var uniqueCity = [...new Set(cityArray)];
+  localStorage.setItem("searchHistory", JSON.stringify(uniqueCity));
+  console.log(cityArray);
   //Create url for API
   urlLink =
     "http://api.openweathermap.org/data/2.5/forecast?q=" +
     userCity +
     "&appid=96bbb97e9dec979e1eede50c7d6896d7";
   //Call function with link
+  for (var i = 0; i < uniqueCity.length; i++) {
+    var historyButton = $("<button>").attr(
+      "class",
+      "btn btn-outline-primary btnsize"
+    );
+    historyButton.text(uniqueCity[i]);
+    $(".searchHistory").prepend(historyButton);
+  }
+  getAPI(urlLink);
+});
 
+$(".searchHistory").on("click", ".btnsize", function () {
+  $(".col-10").empty();
+  var userCity = $(this).text();
+  urlLink =
+    "http://api.openweathermap.org/data/2.5/forecast?q=" +
+    userCity +
+    "&appid=96bbb97e9dec979e1eede50c7d6896d7";
   getAPI(urlLink);
 });
 
@@ -46,19 +90,7 @@ function getAPI(urlLink) {
       return response.json();
     })
     .then(function (data) {
-      currentDate = data.list[0].dt_txt;
-
-      currentDate = currentDate.split(" ")[0];
-      currentDate =
-        "(" +
-        currentDate.split("-")[1] +
-        "/" +
-        currentDate.split("-")[2] +
-        "/" +
-        currentDate.split("-")[0] +
-        ")";
-      currentDayHeader.text(data.city.name + " " + currentDate);
-
+      var cityName = data.city.name;
       var cityLat = data.city.coord.lat;
       var cityLon = data.city.coord.lon;
       var urlLink =
@@ -78,7 +110,11 @@ function getAPI(urlLink) {
           return response.json();
         })
         .then(function (data) {
-          console.log(data);
+          currentDate = new Date(Number(data.daily[0].dt) * 1000);
+
+          currentDayHeader.text(
+            cityName + " " + currentDate.toLocaleString().split(",")[0]
+          );
           currentDayImg = $("<img>").attr({
             src:
               "http://openweathermap.org/img/wn/" +
