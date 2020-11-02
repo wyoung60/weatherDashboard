@@ -2,7 +2,7 @@ var cityArray = JSON.parse(localStorage.getItem("searchHistory"));
 if (cityArray === null) {
   var cityArray = [];
 }
-console.log(cityArray);
+
 for (var i = 0; i < cityArray.length; i++) {
   var historyButton = $("<button>").attr(
     "class",
@@ -83,7 +83,7 @@ $(".searchHistory").on("click", ".btnsize", function () {
   $(".col-10").empty();
   var userCity = $(this).text();
   urlLink =
-    "http://api.openweathermap.org/data/2.5/forecast?q=" +
+    "https://api.openweathermap.org/data/2.5/forecast?q=" +
     userCity +
     "&appid=96bbb97e9dec979e1eede50c7d6896d7";
   getAPI(urlLink);
@@ -105,7 +105,7 @@ function getAPI(urlLink) {
         cityLon +
         "&exclude=minutely,hourly,alerts&units=imperial&appid=96bbb97e9dec979e1eede50c7d6896d7";
       var uvLink =
-        "http://api.openweathermap.org/data/2.5/uvi?lat=" +
+        "https://api.openweathermap.org/data/2.5/uvi?lat=" +
         cityLat +
         "&lon=" +
         cityLon +
@@ -122,7 +122,7 @@ function getAPI(urlLink) {
           );
           currentDayImg = $("<img>").attr({
             src:
-              "http://openweathermap.org/img/wn/" +
+              "https://openweathermap.org/img/wn/" +
               data.current.weather[0].icon +
               "@2x.png",
             class: "float_left",
@@ -139,7 +139,7 @@ function getAPI(urlLink) {
 
             dailyForecastImg[i].attr(
               "src",
-              "http://openweathermap.org/img/wn/" +
+              "https://openweathermap.org/img/wn/" +
                 data.daily[i].weather[0].icon +
                 "@2x.png"
             );
