@@ -41,9 +41,14 @@ for (var i = 1; i < 6; i++) {
 //Click event for search button
 
 $("#searchBtn").on("click", function () {
+  console.log($("#cityName").val());
+  if ($("#cityName").val() == "") {
+    console.log("here");
+    return;
+  }
   $(".col-10").empty();
   $(".searchHistory").empty();
-  $;
+
   //Store selected city
   var userCity = $("#cityName").val();
   $("#cityName").val("");
@@ -155,9 +160,15 @@ function getAPI(urlLink) {
                   padding: "3px",
                   "border-radius": "10px",
                 });
-              } else {
+              } else if (Number(data.value) > 5) {
                 uvSpanElement.css({
                   "background-color": "red",
+                  padding: "3px",
+                  "border-radius": "10px",
+                });
+              } else {
+                uvSpanElement.css({
+                  "background-color": "yellow",
                   padding: "3px",
                   "border-radius": "10px",
                 });
