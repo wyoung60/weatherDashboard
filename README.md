@@ -10,7 +10,7 @@ Linking the api calls to get all necessary information was a challenge. Needed t
 
 ## Screenshot
 
-<img src=/Asset/Screenshot.JPG>
+<img src=/Assets/Screenshot.JPG>
 
 ## Links
 
